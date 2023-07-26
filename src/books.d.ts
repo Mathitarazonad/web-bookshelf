@@ -15,3 +15,5 @@ export interface Book {
     }
   }
 }
+
+export type LibraryType = 'availables' | 'toRead'
