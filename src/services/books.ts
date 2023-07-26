@@ -1,7 +1,7 @@
 import { Book, Library } from '../books'
 import json from '../db/books.json'
 
-type FilterType = 'genre' | 'title' | 'author'
+type FilterType = 'genre' | 'title' | 'author' | 'pages'
 
 export const getLibrary = (): Library => {
   const library: Library = json.library
