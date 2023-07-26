@@ -8,14 +8,19 @@ export const getLibrary = (): Library => {
   return library
 }
 
-export const filterLibrary = (filterBy: FilterType, filterParam: string, library: Library) => {
+export const filterLibrary = (filterBy: FilterType, filterParam: string | string[], library: Library) => {
   const newLibrary: Library = [...library]
 
   const filterFunctions = {
-    genre: ({ book }: Book) => book.genre.toLowerCase().includes(filterParam.toLowerCase()),
-    title: ({ book }: Book) => book.title.toLowerCase().includes(filterParam.toLowerCase()),
-    author: ({ book }: Book) => book.author.name.toLowerCase().includes(filterParam.toLowerCase()),
-    pages: ({ book }: Book) => book.pages >= parseInt(filterParam)
+    title: ({ book }: Book) => book.title.toLowerCase().includes((filterParam as string).toLowerCase()),
+    author: ({ book }: Book) => book.author.name.toLowerCase().includes((filterParam as string).toLowerCase()),
+    pages: ({ book }: Book) => book.pages >= parseInt(filterParam as string)
+  }
+
+  if (filterBy === 'genre') {
+    if (filterParam.length === 0) return newLibrary
+    const sortedLibrary = (filterParam as []).flatMap(genre => newLibrary.filter(({ book }) => book.genre === genre))
+    return sortedLibrary
   }
 
   const sortedLibrary = newLibrary.filter(filterFunctions[filterBy])
