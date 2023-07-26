@@ -17,7 +17,7 @@ const getFromLocalStorage = (item: LibraryType) => {
 }
 
 const libraryStore = create<LibraryState>((set) => ({
-  availableBooks: getFromLocalStorage('availables') ?? getLibrary(),
+  availableBooks: getFromLocalStorage('availableBooks') ?? getLibrary(),
   toRead: getFromLocalStorage('toRead') ?? [],
   updateLibrary: (libraryType: LibraryType, library: Library) => set(state => ({
     ...state, [libraryType]: library
