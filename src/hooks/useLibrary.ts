@@ -5,9 +5,11 @@ import libraryStore from '../store/libraryStore'
 export default function useLibrary () {
   const { availableBooks, toRead, updateLibrary } = libraryStore((state) => state)
 
-  const updateLibraries = (libraryType: LibraryType, library: Library) => {
+  const updateLibraries = (libraryType: LibraryType, library: Library, saveLocal = true) => {
     updateLibrary(libraryType, library)
-    window.localStorage.setItem(libraryType, JSON.stringify(library))
+    if (saveLocal) {
+      window.localStorage.setItem(libraryType, JSON.stringify(library))
+    }
   }
 
   const getAllGenres = () => {
