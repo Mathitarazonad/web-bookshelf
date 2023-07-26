@@ -1,6 +1,7 @@
 import useLibrary from '../hooks/useLibrary'
+import { getFromLocalStorage } from '../services/localStorage'
 import filterStore from '../store/filterStore'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 export default function Filters () {
   const genres = useLibrary().getAllGenres()
@@ -22,6 +23,13 @@ export default function Filters () {
   const handlePageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updatePagesFilter(e.target.value)
   }
+
+  useEffect(() => {
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'selectedGenres') updateSelectedGenres(getFromLocalStorage('selectedGenres'))
+      if (e.key === 'pages') updatePagesFilter(getFromLocalStorage('pages'))
+    })
+  }, [])
 
   return (
     <div className='flex flex-col gap-2'>
