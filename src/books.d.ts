@@ -16,4 +16,4 @@ export interface Book {
   }
 }
 
-export type LibraryType = 'availables' | 'toRead'
+export type LibraryType = 'availableBooks' | 'toRead'
