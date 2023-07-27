@@ -7,14 +7,15 @@ import { getFromLocalStorage } from '../services/localStorage'
 
 export default function AvailableBooks () {
   const { availableBooks } = useLibrary()
-  const { selectedGenres, pages } = filterStore()
+  const { selectedGenres, pages, search } = filterStore()
   const [updatedAvailableBooks, setUpdatedAvailableBooks] = useState([...availableBooks])
 
   useEffect(() => {
     let filteredLibrary = filterLibrary('genre', selectedGenres, availableBooks)
     filteredLibrary = filterLibrary('pages', pages, filteredLibrary)
+    if (search !== '') filteredLibrary = filterLibrary('search', search, filteredLibrary)
     setUpdatedAvailableBooks(filteredLibrary)
-  }, [selectedGenres, availableBooks, pages])
+  }, [selectedGenres, availableBooks, pages, search])
 
   const { updateLibraries } = useLibrary()
 
@@ -32,9 +33,14 @@ export default function AvailableBooks () {
   }, [])
 
   return (
-    <section className='flex gap-4 flex-wrap'>
-      {updatedAvailableBooks.map(({ book }) =>
-        <BookView key={book.ISBN} book={book} />)}
+    <section className='col-span-3 h-max flex flex-col gap-4 bg-orange-800 bg-opacity-[15%] p-4 rounded-md'>
+      <h3 className='w-max font-semibold text-gray-700 text-center col-span-2 rounded-full border-2 border-gray-700 px-4 py-[2px]'>
+        Available Books ({availableBooks.length})
+      </h3>
+      <div className='grid grid-cols-2 gap-6'>
+        {updatedAvailableBooks.map(({ book }) =>
+          <BookView key={book.ISBN} book={book} />)}
+      </div>
     </section>
   )
 }
