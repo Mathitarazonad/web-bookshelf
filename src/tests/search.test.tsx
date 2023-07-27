@@ -1,23 +1,25 @@
-import { afterAll, describe, expect, it } from 'vitest'
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
 import AppHeader from '../components/AppHeader'
 import AvailableBooks from '../components/AvailableBooks'
 
 describe('Search input', () => {
-  afterAll(cleanup)
-  it('should display books based on search input', async () => {
-    render(<AppHeader />)
-    render(<AvailableBooks />)
+  render(<AppHeader />)
+  render(<AvailableBooks />)
 
-    const searchInput = screen.getByPlaceholderText('Search by author or title')
-    const searchButton = await screen.findByRole('button', { name: 'Search' })
+  const searchInput = screen.getByPlaceholderText('Search by author or title')
+  const searchButton = screen.getByRole('button', { name: 'Search' })
 
-    fireEvent.change(searchInput, { target: { value: 'El señor' } })
-    fireEvent.click(searchButton)
+  fireEvent.change(searchInput, { target: { value: 'El señor' } })
+  fireEvent.click(searchButton)
 
-    const book = screen.getByText('El Señor de los Anillos')
+  it('should display books based on search input', () => {
+    const bookToBeRendered = screen.getByText('El Señor de los Anillos')
+    expect(bookToBeRendered)
+  })
+
+  it('should not display books that not match the search input', () => {
     const bookToNotBeRendered = screen.queryByText('Drácula')
-    expect(book)
     expect(bookToNotBeRendered).toBeNull()
   })
 })
