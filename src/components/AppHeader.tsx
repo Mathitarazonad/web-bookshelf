@@ -16,7 +16,7 @@ export default function AppHeader () {
         <form className='flex flex-col gap-4 w-[510px] justify-center items-center' onSubmit={handleSearch}>
           <h2 className='text-orange-950 font-semibold text-5xl'>Search for your book</h2>
           <div className='flex gap-2 w-full'>
-            <input type='text' placeholder='El señor de los anillos' className='px-4 py-3 flex-1 rounded-md text-orange-950 font-semibold outline-none' ref={searchInput} />
+            <input type='text' placeholder='Search by author or title' className='px-4 py-3 flex-1 rounded-md text-orange-950 font-semibold outline-none' ref={searchInput} />
             <button type='submit' className='rounded-md border-2 text-orange-800 border-orange-800 bg-orange-800 bg-opacity-20 font-semibold px-6 hover:bg-opacity-100 hover:text-white duration-150'>Search</button>
           </div>
         </form>
