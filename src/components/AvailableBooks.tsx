@@ -6,7 +6,7 @@ import { filterLibrary } from '../services/books'
 import { getFromLocalStorage } from '../services/localStorage'
 
 export default function AvailableBooks () {
-  const { availableBooks } = useLibrary()
+  const { availableBooks, toRead } = useLibrary()
   const { selectedGenres, pages, search } = filterStore()
   const [updatedAvailableBooks, setUpdatedAvailableBooks] = useState([...availableBooks])
 
@@ -33,11 +33,11 @@ export default function AvailableBooks () {
   }, [])
 
   return (
-    <section className='col-span-3 h-max flex flex-col gap-4 bg-orange-800 bg-opacity-[15%] p-4 rounded-md'>
+    <section className='col-span-4 h-max flex flex-col gap-4 bg-orange-800 bg-opacity-[15%] p-4 rounded-md last:col-span-6'>
       <h3 className='w-max font-semibold text-gray-700 text-center col-span-2 rounded-full border-2 border-gray-700 px-4 py-[2px]'>
         Available Books ({availableBooks.length})
       </h3>
-      <div className='grid grid-cols-2 gap-6'>
+      <div className={toRead.length === 0 ? 'grid grid-cols-3 gap-4' : 'grid grid-cols-2 gap-4'}>
         {updatedAvailableBooks.map(({ book }) =>
           <BookView key={book.ISBN} book={book} />)}
       </div>

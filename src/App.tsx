@@ -7,7 +7,7 @@ function App () {
   return (
     <main className='bg-white flex flex-wrap gap-4 font-poppins'>
       <AppHeader />
-      <div className='grid gap-4 grid-cols-6 p-6'>
+      <div className='grid gap-4 grid-cols-7 p-4 w-full'>
         <Filters />
         <AvailableBooks />
         <ReadingBooks />

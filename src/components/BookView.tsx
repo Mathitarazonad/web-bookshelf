@@ -27,13 +27,13 @@ export default function BookView ({ book }: Book) {
         </section>
         <section>
           <h3 className='text-amber-700 font-bold text-xl'>{book.title}</h3>
-          <h4 className='text-gray-600'>{book.author.name}</h4>
-          <p className='text-gray-600'><span>Genre: </span>{book.genre}</p>
+          <h4 className='text-gray-600 font-semibold'>{book.author.name}</h4>
+          <p className='text-gray-600'><span className='font-semibold'>Genre: </span>{book.genre}</p>
           <p className='text-gray-600'>{book.pages} pages</p>
         </section>
       </header>
       <footer className='mt-auto'>
-        <button className='text-amber-950 font-semibold text-lg bg-amber-950 bg-opacity-[10%] border-amber-950 border-[2px] w-full py-2 rounded-md hover:bg-opacity-100 hover:text-white transition-all duration-150' type='button' onClick={() => handleLibraryChange()}>
+        <button className='text-white font-semibold text-lg bg-orange-800 w-full py-2 rounded-md hover:bg-opacity-70 transition-all duration-150' type='button' onClick={() => handleLibraryChange()}>
           {isReading ? 'Remove from list' : 'Move to read'}
         </button>
       </footer>
