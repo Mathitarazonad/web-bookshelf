@@ -6,6 +6,8 @@ interface FilterState {
   updateSelectedGenres: (genres: string[]) => void
   pages: string
   updatePagesFilter: (newPages: string) => void
+  search: string
+  updateSearch: (newSearch: string) => void
 }
 
 const filterStore = create<FilterState>(set => ({
@@ -18,7 +20,9 @@ const filterStore = create<FilterState>(set => ({
   updatePagesFilter: (newPages: string) => set(() => {
     updateLocalStorage('pages', newPages)
     return { pages: newPages }
-  })
+  }),
+  search: '',
+  updateSearch: (newSearch: string) => set(() => ({ search: newSearch }))
 }))
 
 export default filterStore

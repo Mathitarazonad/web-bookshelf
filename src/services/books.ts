@@ -1,7 +1,7 @@
 import { Book, Library } from '../books'
 import json from '../db/books.json'
 
-type FilterType = 'genre' | 'title' | 'author' | 'pages'
+type FilterType = 'genre' | 'search' | 'pages'
 
 export const getLibrary = (): Library => {
   const library: Library = json.library
@@ -12,8 +12,7 @@ export const filterLibrary = (filterBy: FilterType, filterParam: string | string
   const newLibrary: Library = [...library]
 
   const filterFunctions = {
-    title: ({ book }: Book) => book.title.toLowerCase().includes((filterParam as string).toLowerCase()),
-    author: ({ book }: Book) => book.author.name.toLowerCase().includes((filterParam as string).toLowerCase()),
+    search: ({ book }: Book) => book.title.toLowerCase().includes((filterParam as string).toLowerCase()) || book.author.name.toLowerCase().includes((filterParam as string).toLowerCase()),
     pages: ({ book }: Book) => book.pages >= parseInt(filterParam as string)
   }
 
