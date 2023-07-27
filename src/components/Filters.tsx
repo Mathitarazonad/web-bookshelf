@@ -32,8 +32,8 @@ export default function Filters () {
   }, [])
 
   return (
-    <div className='flex flex-col gap-2'>
-      <h3>Filter by</h3>
+    <div className='col-span-1 flex flex-col w-full h-max border-r-2 border-amber-950 border-opacity-10 '>
+      <h3 className='text-2xl text-amber-950 font-semibold'>Filter by</h3>
       <fieldset>
         <legend>Genre</legend>
         {genres.map(gen =>
