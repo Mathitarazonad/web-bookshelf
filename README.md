@@ -18,7 +18,7 @@
   <a href="#author">Author</a>
 </p>
 
-![screenshot](./public/designs/web-desktop.webp)
+![screenshot](./public/designs/web-bookshelf.webp)
 
 ## Project
 
@@ -84,9 +84,10 @@ This project is maded as a solution for [Midudev Pruebas Técnicas](https://prue
 
 ## Author
 
-- [Mathitarazonad's Github](https://github.com/Mathitarazonad)
+<ul>
+  <li><a href="https://github.com/Mathitarazonad" target="_blank">Mathitarazonad's Github</a></li>
+  <li><a href="https://www.linkedin.com/in/mathias-tarazona-856197263/" target="_blank">Mathitarazonad's LinkeIn</a></li>
+  <li>Email: tarazonamathias@gmail.com</li>
+</ul>
   
-- [Mathías Tarazona's LinkeIn](https://www.linkedin.com/in/mathias-tarazona-856197263/)
-  
-- Email: tarazonamathias@gmail.com
 
