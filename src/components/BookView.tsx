@@ -1,6 +1,7 @@
 import { Book } from '../books'
+import { AVAILABLE_BOOKS, TO_READ } from '../consts/libraries'
 import useLibrary from '../hooks/useLibrary'
-import { LazyMotion, domMax, m } from 'framer-motion'
+import { LazyMotion, m, domMax } from 'framer-motion'
 
 export default function BookView ({ book }: Book) {
   const { availableBooks, toRead, updateLibraries } = useLibrary()
@@ -10,14 +11,14 @@ export default function BookView ({ book }: Book) {
     if (isReading) {
       const updatedAvailableBooks = [...availableBooks, { book }]
       const updatedReadingLibrary = toRead.filter(({ book: b }) => b.ISBN !== book.ISBN)
-      updateLibraries('availableBooks', updatedAvailableBooks)
-      updateLibraries('toRead', updatedReadingLibrary)
+      updateLibraries(AVAILABLE_BOOKS, updatedAvailableBooks)
+      updateLibraries(TO_READ, updatedReadingLibrary)
       return
     }
     const updatedAvailableBooks = availableBooks.filter(({ book: b }) => b.ISBN !== book.ISBN)
     const updatedReadingLibrary = [...toRead, { book }]
-    updateLibraries('availableBooks', updatedAvailableBooks)
-    updateLibraries('toRead', updatedReadingLibrary)
+    updateLibraries(AVAILABLE_BOOKS, updatedAvailableBooks)
+    updateLibraries(TO_READ, updatedReadingLibrary)
   }
 
   return (

@@ -6,6 +6,8 @@ import { filterLibrary } from '../services/books'
 import { getFromLocalStorage } from '../services/localStorage'
 import BooksByGenre from './BooksByGenre'
 import { AnimatePresence, motion } from 'framer-motion'
+import { GENRE_FILTER, PAGES_FILTER, SEARCH_FILTER } from '../consts/filters'
+import { AVAILABLE_BOOKS, TO_READ } from '../consts/libraries'
 
 export default function AvailableBooks () {
   const { availableBooks, toRead } = useLibrary()
@@ -13,9 +15,9 @@ export default function AvailableBooks () {
   const [updatedAvailableBooks, setUpdatedAvailableBooks] = useState([...availableBooks])
 
   useEffect(() => {
-    let filteredLibrary = filterLibrary('genre', selectedGenres, availableBooks)
-    filteredLibrary = filterLibrary('pages', pages, filteredLibrary)
-    if (search !== '') filteredLibrary = filterLibrary('search', search, filteredLibrary)
+    let filteredLibrary = filterLibrary(GENRE_FILTER, selectedGenres, availableBooks)
+    filteredLibrary = filterLibrary(PAGES_FILTER, pages, filteredLibrary)
+    if (search !== '') filteredLibrary = filterLibrary(SEARCH_FILTER, search, filteredLibrary)
     setUpdatedAvailableBooks(filteredLibrary)
   }, [selectedGenres, availableBooks, pages, search])
 
@@ -23,13 +25,13 @@ export default function AvailableBooks () {
 
   useEffect(() => {
     window.addEventListener('storage', (event) => {
-      if (event.key === 'availableBooks' || event.key === 'toRead') {
+      if (event.key === AVAILABLE_BOOKS || event.key === TO_READ) {
         const [updatedAvailableBooks, updatedToReadBooks] = [
-          getFromLocalStorage('availableBooks'),
-          getFromLocalStorage('toRead')
+          getFromLocalStorage(AVAILABLE_BOOKS),
+          getFromLocalStorage(TO_READ)
         ]
-        updateLibraries('availableBooks', updatedAvailableBooks, false)
-        updateLibraries('toRead', updatedToReadBooks, false)
+        updateLibraries(AVAILABLE_BOOKS, updatedAvailableBooks, false)
+        updateLibraries(TO_READ, updatedToReadBooks, false)
       }
     })
   }, [])

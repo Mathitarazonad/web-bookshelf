@@ -1,7 +1,8 @@
 import { Book, Library } from '../books'
+import { GENRE_FILTER } from '../consts/filters'
 import json from '../db/books.json'
 
-type FilterType = 'genre' | 'search' | 'pages'
+export type FilterType = 'genre' | 'search' | 'pages'
 
 export const getLibrary = (): Library => {
   const library: Library = json.library
@@ -16,7 +17,7 @@ export const filterLibrary = (filterBy: FilterType, filterParam: string | string
     pages: ({ book }: Book) => book.pages >= parseInt(filterParam as string)
   }
 
-  if (filterBy === 'genre') {
+  if (filterBy === GENRE_FILTER) {
     if (filterParam.length === 0) return newLibrary
     const sortedLibrary = (filterParam as []).flatMap(genre => newLibrary.filter(({ book }) => book.genre === genre))
     return sortedLibrary
