@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import AppHeader from '../components/AppHeader'
 import AvailableBooks from '../components/AvailableBooks'
+import 'intersection-observer'
 
 describe('Search input', () => {
   render(<AppHeader />)

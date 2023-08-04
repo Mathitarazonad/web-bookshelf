@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { fireEvent, render, screen, within } from '@testing-library/react'
+import 'intersection-observer'
 import AvailableBooks from '../components/AvailableBooks'
 import ReadingBooks from '../components/ReadingBooks'
 
