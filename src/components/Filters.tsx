@@ -1,3 +1,4 @@
+import { GENRE_FILTER, PAGES_FILTER } from '../consts/filters'
 import useLibrary from '../hooks/useLibrary'
 import { getFromLocalStorage } from '../services/localStorage'
 import filterStore from '../store/filterStore'
@@ -5,33 +6,36 @@ import { useEffect, useMemo } from 'react'
 
 export default function Filters () {
   const genres = useLibrary().getAllGenres()
-  const { selectedGenres, updateSelectedGenres, pages, updatePagesFilter } = filterStore()
+  const { filters, updateFilters } = filterStore()
   const { availableBooks } = useLibrary()
   const maxNumberOfPages = useMemo(() => {
     return availableBooks.reduce((prev, { book }) => book.pages > prev ? book.pages : prev, 0)
   }, [availableBooks])
 
   useEffect(() => {
-    if (parseInt(pages) > maxNumberOfPages) updatePagesFilter(JSON.stringify(maxNumberOfPages))
+    if (parseInt(filters.pages) > maxNumberOfPages) updateFilters(PAGES_FILTER, JSON.stringify(maxNumberOfPages))
   }, [maxNumberOfPages])
 
   const handleGenreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked: checkState, value } = e.target
+    let updatedGenres = [...filters.genres]
+
     if (checkState) {
-      updateSelectedGenres([...selectedGenres, value])
+      updatedGenres = [...updatedGenres, value]
     } else {
-      updateSelectedGenres(selectedGenres.filter(gen => gen !== value))
+      updatedGenres = filters.genres.filter(gen => gen !== value)
     }
+    updateFilters(GENRE_FILTER, updatedGenres)
   }
 
   const handlePageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updatePagesFilter(e.target.value)
+    updateFilters(PAGES_FILTER, e.target.value)
   }
 
   useEffect(() => {
     window.addEventListener('storage', (e) => {
-      if (e.key === 'selectedGenres') updateSelectedGenres(getFromLocalStorage('selectedGenres'))
-      if (e.key === 'pages') updatePagesFilter(getFromLocalStorage('pages'))
+      if (e.key === GENRE_FILTER) updateFilters(GENRE_FILTER, getFromLocalStorage(GENRE_FILTER))
+      if (e.key === PAGES_FILTER) updateFilters(PAGES_FILTER, getFromLocalStorage(PAGES_FILTER))
     })
   }, [])
 
@@ -48,7 +52,7 @@ export default function Filters () {
                 id={gen}
                 value={gen}
                 onChange={handleGenreChange}
-                checked={selectedGenres.includes(gen)}
+                checked={filters.genres.includes(gen)}
               />
               <label htmlFor={gen} className='text-gray-600 font-medium'>
                 {gen} ({availableBooks.filter(({ book }) => book.genre === gen).length})
@@ -57,14 +61,14 @@ export default function Filters () {
         </fieldset>
         <fieldset>
           <label className='text-base text-orange-800 font-bold'>
-            {pages} min pages
+            {filters.pages} min pages
           </label>
           <input
             type='range'
             min={0} max={maxNumberOfPages}
             id='pages'
             onChange={handlePageChange}
-            value={pages}
+            value={filters.pages}
           />
         </fieldset>
       </div>

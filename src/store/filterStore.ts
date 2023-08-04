@@ -1,28 +1,29 @@
 import { create } from 'zustand'
 import { getFromLocalStorage, updateLocalStorage } from '../services/localStorage'
+import { PAGES_FILTER, GENRE_FILTER } from '../consts/filters'
 
-interface FilterState {
-  selectedGenres: string[]
-  updateSelectedGenres: (genres: string[]) => void
+interface Filters {
+  genres: string[]
   pages: string
-  updatePagesFilter: (newPages: string) => void
   search: string
-  updateSearch: (newSearch: string) => void
+}
+interface FilterState {
+  filters: Filters
+  updateFilters: <K extends keyof FilterState['filters']>(filterBy: K, filterParam: FilterState['filters'][K]) => void
 }
 
 const filterStore = create<FilterState>(set => ({
-  selectedGenres: getFromLocalStorage('selectedGenres') ?? [],
-  updateSelectedGenres: (genres) => set(() => {
-    updateLocalStorage('selectedGenres', genres)
-    return { selectedGenres: [...genres] }
-  }),
-  pages: getFromLocalStorage('pages') ?? '0',
-  updatePagesFilter: (newPages: string) => set(() => {
-    updateLocalStorage('pages', newPages)
-    return { pages: newPages }
-  }),
-  search: '',
-  updateSearch: (newSearch: string) => set(() => ({ search: newSearch }))
+  filters: {
+    genres: getFromLocalStorage(GENRE_FILTER) ?? [],
+    pages: getFromLocalStorage(PAGES_FILTER) ?? '0',
+    search: ''
+  },
+  updateFilters: (filterBy, filterParam) => set(state => {
+    if (filterBy === GENRE_FILTER || filterBy === PAGES_FILTER) {
+      updateLocalStorage(filterBy, filterParam)
+    }
+    return { filters: { ...state.filters, [filterBy]: filterParam } }
+  })
 }))
 
 export default filterStore

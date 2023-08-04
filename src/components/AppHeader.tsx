@@ -1,12 +1,13 @@
 import { useRef } from 'react'
 import filterStore from '../store/filterStore'
+import { SEARCH_FILTER } from '../consts/filters'
 
 export default function AppHeader () {
   const searchInput = useRef<null | HTMLInputElement>(null)
-  const updateSearch = filterStore().updateSearch
+  const updateSearch = filterStore().updateFilters
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    updateSearch((searchInput.current as HTMLInputElement).value)
+    updateSearch(SEARCH_FILTER, (searchInput.current as HTMLInputElement).value)
   }
 
   return (

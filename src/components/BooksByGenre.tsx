@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export default function BooksByGenre () {
   const { availableBooks } = useLibrary()
-  const { selectedGenres } = filterStore()
-  const booksBySelectedGenres = selectedGenres.map(genre => {
+  const { genres } = filterStore().filters
+  const booksBySelectedGenres = genres.map(genre => {
     const booksByGenre = availableBooks.filter(({ book }) => book.genre === genre).length
     return ({ genre, quantity: booksByGenre })
   })
@@ -19,7 +19,7 @@ export default function BooksByGenre () {
           exit={{ opacity: 0, x: -50 }}
           layout
           className='w-max font-semibold text-orange-800 text-center col-span-2 rounded-full border-2 border-orange-800 px-4 py-[3px]'
-          key={`${genres.genre}${genres.quantity}`}
+          key={genres.genre}
         >
           {genres.genre} ({genres.quantity})
         </motion.h3>)}

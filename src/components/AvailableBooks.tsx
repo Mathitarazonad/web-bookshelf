@@ -6,20 +6,17 @@ import { filterLibrary } from '../services/books'
 import { getFromLocalStorage } from '../services/localStorage'
 import BooksByGenre from './BooksByGenre'
 import { AnimatePresence, motion } from 'framer-motion'
-import { GENRE_FILTER, PAGES_FILTER, SEARCH_FILTER } from '../consts/filters'
 import { AVAILABLE_BOOKS, TO_READ } from '../consts/libraries'
 
 export default function AvailableBooks () {
   const { availableBooks, toRead } = useLibrary()
-  const { selectedGenres, pages, search } = filterStore()
+  const { filters } = filterStore()
   const [updatedAvailableBooks, setUpdatedAvailableBooks] = useState([...availableBooks])
 
   useEffect(() => {
-    let filteredLibrary = filterLibrary(GENRE_FILTER, selectedGenres, availableBooks)
-    filteredLibrary = filterLibrary(PAGES_FILTER, pages, filteredLibrary)
-    if (search !== '') filteredLibrary = filterLibrary(SEARCH_FILTER, search, filteredLibrary)
+    const filteredLibrary = filterLibrary(filters, availableBooks)
     setUpdatedAvailableBooks(filteredLibrary)
-  }, [selectedGenres, availableBooks, pages, search])
+  }, [filters, availableBooks])
 
   const { updateLibraries } = useLibrary()
 
